@@ -3,10 +3,10 @@
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 import numpy as np
-'''
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(32,GPIO.OUT)
 GPIO.setup(12,GPIO.OUT)
@@ -19,26 +19,26 @@ pL.start(7)
 
 pR.ChangeDutyCycle(7)
 pL.ChangeDutyCycle(7)
-'''
+
 command = 'front'
 
 def control(value):
     global command
     
     value = value.data
-    real = 1.1*value+7
+    real = -1.1*value+7
     print(real)
-    ''' 
-    if command == 'right':
+     
+    if command == 'back':
         pR.ChangeDutyCycle(7.8)
         pL.ChangeDutyCycle(7)
-    elif command == 'left':        
+    elif command == 'front':        
         pR.ChangeDutyCycle(7)
         pL.ChangeDutyCycle(7.8)
     else:
         pR.ChangeDutyCycle(real)  
         pL.ChangeDutyCycle(real)
-    '''
+    
 def Command(data):
     global command
     command = data.data
@@ -55,7 +55,6 @@ if __name__ == '__main__':
         listener()
     except KeyboardInterrupt:
         print("STOP")
-    '''
     finally:
         GPIO.cleanup()
-    '''
+    
