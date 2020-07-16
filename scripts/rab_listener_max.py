@@ -20,24 +20,23 @@ pL.start(7)
 pR.ChangeDutyCycle(7)
 pL.ChangeDutyCycle(7)
 
-command = 'front'
+command = 'forward'
 
 def control(value):
     global command
     
-    value = value.data
-    real = -1.1*value+7
-    print(real)
+    print(1.5*value.data+7)
+    print(command)
      
-    if command == 'back':
-        pR.ChangeDutyCycle(7.8)
+    if command == 'right':
+        pR.ChangeDutyCycle(5.6)
         pL.ChangeDutyCycle(7)
-    elif command == 'front':        
+    elif command == 'left':        
         pR.ChangeDutyCycle(7)
-        pL.ChangeDutyCycle(7.8)
+        pL.ChangeDutyCycle(5.6)
     else:
-        pR.ChangeDutyCycle(real)  
-        pL.ChangeDutyCycle(real)
+        pR.ChangeDutyCycle(1.5*value.data+7)  
+        pL.ChangeDutyCycle(1.5*value.data+7)
     
 def Command(data):
     global command
@@ -57,4 +56,4 @@ if __name__ == '__main__':
         print("STOP")
     finally:
         GPIO.cleanup()
-    
+
