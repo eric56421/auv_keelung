@@ -3,7 +3,7 @@ from rabboni import Rabboni
 
 rab = Rabboni(mode='BLE')
 rab.scan()
-rab.connect(mac_address='E5:9F:B8:36:17:9A')
+rab.connect(mac_address='FD:5F:97:03:38:23')
 rab.read_sensor_config()
 rab.set_sensor_config(4, 500, 20, 100)
 rab.read_sensor_config()
