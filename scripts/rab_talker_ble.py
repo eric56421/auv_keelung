@@ -48,7 +48,7 @@ def ble_custom_callback(status):
         s = 'forward'
         value = status['Acc'][1]
     elif position_fb > 0.4:
-        s = 'back'
+        s = 'backward'
         value = status['Acc'][1]
     else:
         s = 'stable'

@@ -34,19 +34,19 @@ def usb_custom_callback(status):
         position_lr = (1 - ratio) * (position_lr + (status['Gyr'][1] * math.pi/180) * (time.time() - timer)) + ratio * status['Acc'][0]
     
     #Left and Right
-    if status['Acc'][0] < -0.275:
+    if status['Acc'][0] < -0.35:
         s = 'right'
         value = status['Acc'][0]
-    elif status['Acc'][0] > 0.275:
+    elif status['Acc'][0] > 0.35:
         s = 'left'
         value = status['Acc'][0]
     #Front and Back
     elif status['Acc'][1] < -0.4:
-        s = 'front'
+        s = 'forward'
         check = 0
         value = status['Acc'][1]
     elif status['Acc'][1] > 0.4: 
-        s = 'back'
+        s = 'backward'
         check = 0
         value = status['Acc'][1]
     else:
