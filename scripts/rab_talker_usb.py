@@ -25,8 +25,10 @@ def usb_custom_callback(status):
     global timer
     global preW_fb
     global preW_lr
+    
     check = 1
     ratio = 0.7
+    value = 0
 
     if(abs(preW_fb-status['Gyr'][0]) > 0):
         position_fb = (1 - ratio) * (position_fb + (status['Gyr'][0] * math.pi/180) * (time.time() - timer)) + ratio * status['Acc'][1]
@@ -52,7 +54,7 @@ def usb_custom_callback(status):
     else:
         s = 'stable'
 
-    #print(s + ' ' + str(position_fb) + ' ' + str(position_lr))
+    print(s + ' ' + str(position_fb) + ' ' + str(position_lr))
     pub1.publish(s)
     pub2.publish(value)
     timer = time.time()

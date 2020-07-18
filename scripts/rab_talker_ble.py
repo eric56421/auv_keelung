@@ -28,6 +28,7 @@ def ble_custom_callback(status):
     global timer
     global preW_fb
     global preW_lr
+    
     value = 0
     ratio = 0.7
 
