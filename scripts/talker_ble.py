@@ -11,9 +11,9 @@ from rabboni import Rabboni
 
 rab = Rabboni(mode='BLE')
 rab.scan()
-rab.connect(mac_address='F6:20:ED:F3:5B:F2')
-rab.read_sensor_config()
+rab.connect(mac_address='F6:20:ED:F3:5B:F2') #對應到Rabboni
 
+rab.read_sensor_config()
 rab.set_sensor_config(2, 500, 5, 100)
 rab.read_sensor_config()
 position_lr = 0
@@ -28,7 +28,6 @@ def ble_custom_callback(status):
     global timer
     global preW_fb
     global preW_lr
-    
     value = 0
     ratio = 0.7
 

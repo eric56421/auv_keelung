@@ -25,10 +25,8 @@ def usb_custom_callback(status):
     global timer
     global preW_fb
     global preW_lr
-    
-    check = 1
-    ratio = 0.7
     value = 0
+    ratio = 0.7
 
     if(abs(preW_fb-status['Gyr'][0]) > 0):
         position_fb = (1 - ratio) * (position_fb + (status['Gyr'][0] * math.pi/180) * (time.time() - timer)) + ratio * status['Acc'][1]
@@ -36,30 +34,28 @@ def usb_custom_callback(status):
         position_lr = (1 - ratio) * (position_lr + (status['Gyr'][1] * math.pi/180) * (time.time() - timer)) + ratio * status['Acc'][0]
     
     #Left and Right
-    if status['Acc'][0] < -0.35:
+    if position_lr < -0.35:
         s = 'right'
         value = status['Acc'][0]
-    elif status['Acc'][0] > 0.35:
+    elif position_lr > 0.35:
         s = 'left'
         value = status['Acc'][0]
-    #Front and Back
-    elif status['Acc'][1] < -0.4:
+    #Forward and Backward
+    elif position_fb < -0.4:
         s = 'forward'
-        check = 0
         value = status['Acc'][1]
-    elif status['Acc'][1] > 0.4: 
+    elif position_fb > 0.4: 
         s = 'backward'
-        check = 0
         value = status['Acc'][1]
     else:
         s = 'stable'
 
-    print(s + ' ' + str(position_fb) + ' ' + str(position_lr))
     pub1.publish(s)
     pub2.publish(value)
+    print(s + ' ' + str(value))
     timer = time.time()
-    preW_fb = status['Gyr'][0]
-    preW_lr = status['Gyr'][1]
+    preW_fb = position_fb
+    preW_lr = position_lr
 
 if __name__ == '__main__':
     rospy.init_node('talker', anonymous=True)

@@ -20,41 +20,30 @@ pL.start(7)
 pR.ChangeDutyCycle(7)
 pL.ChangeDutyCycle(7)
 
-command = 'front'
-
+command = 'forward'
 
 def control(value):
     global command
+    lr_strength = 1.4     #左右轉幅度，越大越強
+    fb_strength = 1.3     #前後強度，越大越強
     
-    value = value.data
-    real = 0.25*value+7
-    real2 = -0.25*value+7
+    print(fb_strength*value.data+7)
+     
     if command == 'right':
-        pR.ChangeDutyCycle(8.2)
-        pL.ChangeDutyCycle(8.2)
-    
+        pR.ChangeDutyCycle(7-lr_strength)
+        pL.ChangeDutyCycle(7+lr_strength)
     elif command == 'left':        
-        pR.ChangeDutyCycle(6.8)
-        pL.ChangeDutyCycle(6.8)
+        pR.ChangeDutyCycle(7+lr_strength)
+        pL.ChangeDutyCycle(7-lr_strength)
     else:
-        pR.ChangeDutyCycle(real)  
-        pL.ChangeDutyCycle(real2)
-
+        pR.ChangeDutyCycle(fb_strength*value.data+7)  
+        pL.ChangeDutyCycle(fb_strength*value.data+7)
+    
 def Command(data):
     global command
-
-    if data.data == 'front':
-        command = 'front'
-    elif data.data == 'right':
-        command = 'right'
-    elif data.data == 'left':
-        command = 'left'
-    elif data.data == 'back':
-        command = 'back'
-    else:
-        command = 'stable'
-    
-    
+    command = data.data
+    print(command)
+        
 def listener():    
     rospy.init_node('listener', anonymous=True)
     rospy.Subscriber('command', String, Command)
