@@ -36,16 +36,20 @@ def usb_custom_callback(status):
     #Left and Right
     if position_lr < -0.35:
         s = 'right'
+
         value = status['Acc'][0]
     elif position_lr > 0.35:
         s = 'left'
+
         value = status['Acc'][0]
     #Forward and Backward
     elif position_fb < -0.4:
         s = 'forward'
+
         value = status['Acc'][1]
     elif position_fb > 0.4: 
         s = 'backward'
+
         value = status['Acc'][1]
     else:
         s = 'stable'
